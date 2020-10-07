@@ -1,0 +1,9 @@
+<configuration>
+    <logger name="org" level="DEBUG"/>
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+            <charset>GBK</charset>
+        </encoder>
+    </appender>
+</configuration>
