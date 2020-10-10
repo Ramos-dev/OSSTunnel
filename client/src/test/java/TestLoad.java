@@ -1,5 +1,3 @@
-import org.junit.Test;
-
 import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
 import java.util.concurrent.ExecutorService;
@@ -16,8 +14,7 @@ public class TestLoad {
     }
 
 
-
-    public static void go(){
+    public static void go() {
         ExecutorService pool = Executors.newCachedThreadPool();
         final Semaphore sp = new Semaphore(1, true);
         for (int i = 0; i < 1; i++) {

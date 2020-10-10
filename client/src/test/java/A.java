@@ -9,29 +9,29 @@ public class A {
 
     public static void main(String[] args) {
 
-        for (int i = 1 ;i<65534;i++){
-             new A.AcceptThread().start();
+        for (int i = 1; i < 65534; i++) {
+            new A.AcceptThread().start();
 
-            port ++;
+            port++;
         }
 
 
     }
 
-   static class AcceptThread extends Thread  {
+    static class AcceptThread extends Thread {
 
-           ServerSocket serverSocket;
+        ServerSocket serverSocket;
 
-       {
-           try {
-               serverSocket = new ServerSocket(port);
-               System.out.println(port);
-           } catch (IOException e) {
-               e.printStackTrace();
-           }
-       }
+        {
+            try {
+                serverSocket = new ServerSocket(port);
+                System.out.println(port);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
-       public void run() {
+        public void run() {
 
             Socket socket = null;
             DataInputStream input = null;

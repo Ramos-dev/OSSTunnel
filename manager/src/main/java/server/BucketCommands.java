@@ -30,7 +30,6 @@ import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 
 import javax.validation.Valid;
-import java.io.IOException;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
@@ -177,11 +176,8 @@ public class BucketCommands
                 sessions.append(String.valueOf(i) + "\t");
                 sessions.append(sum.getKey() + "\t");
                 String meta = null;
-                try {
-                    meta = new String(new sun.misc.BASE64Decoder().decodeBuffer(metainfo));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                meta = decode(metainfo);
+
                 sessions.append(meta + "\t");
                 LinkedList linkedList = new LinkedList();
                 linkedList.add(sum.getKey());
@@ -238,11 +234,8 @@ public class BucketCommands
             sessions.append(String.valueOf(i) + "\t");
             sessions.append(sum.getKey() + "\t");
             String meta = null;
-            try {
-                meta = new String(new sun.misc.BASE64Decoder().decodeBuffer(metainfo));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            meta = decode(metainfo);
+
             sessions.append(meta + "\t");
             LinkedList linkedList = new LinkedList();
             linkedList.add(sum.getKey());
@@ -363,11 +356,8 @@ public class BucketCommands
                 sessions.append(String.valueOf(i) + "\t");
                 sessions.append(summary.getKey() + "\t");
                 String meta = null;
-                try {
-                    meta = new String(new sun.misc.BASE64Decoder().decodeBuffer(metainfo));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                meta = decode(metainfo);
+
                 sessions.append(meta + "\t");
                 LinkedList linkedList = new LinkedList();
                 linkedList.add(summary.getKey());
@@ -486,6 +476,76 @@ public class BucketCommands
 
         return s3Client;
 
+    }
+
+
+    /**
+     * Base64解码
+     *
+     * @param s 编码好的base64
+     * @return 结果
+     */
+    public static String decode(String s) {
+        int index = 0;
+        StringBuilder strBuff = new StringBuilder();
+        StringBuilder resultBuff = new StringBuilder();
+        while (true) {
+            //补零
+            if (index == s.length() || s.charAt(index) == '=') {
+                int zeroCount = 8 - strBuff.length();
+                for (int i = 0; i < zeroCount; i++) {
+                    strBuff.append('0');
+                }
+                index = -1;
+            }
+            //更新缓冲区字符
+            while (index != -1 && strBuff.length() < 8 && index < s.length()) {
+                int chatIndex = getCharIndexInBaseChars(s.charAt(index++));
+                strBuff.append(get6BitStr(chatIndex));
+            }
+            //从缓冲区取8个字符
+            String temp2 = strBuff.substring(0, 8);
+            int temp10 = Integer.valueOf(temp2, 2);
+            resultBuff.append((char) temp10);
+            strBuff.delete(0, 8);
+            //判断是否结束
+            if (index == -1)
+                break;
+        }
+        return resultBuff.toString().trim();
+    }
+
+    /**
+     * 得到某个字符，在编码表的位置
+     *
+     * @param i 字符
+     * @return 编号
+     */
+    private static int getCharIndexInBaseChars(char i) {
+        int ascii = (int) i;
+        if (ascii == 43) //'+'
+            return 62;
+        else if (ascii == 47) //'/'
+            return 63;
+        else if (ascii >= 48 && ascii <= 57) // 0-9
+            return ascii + 4;
+        else if (ascii >= 65 && ascii <= 90) // A-Z
+            return ascii - 65;
+        else if (ascii >= 97 && ascii <= 122) // a-z
+            return ascii - 71;
+        else
+            return -1;
+    }
+
+    private static String get6BitStr(int ascii) {
+        StringBuilder s = new StringBuilder(Integer.toBinaryString(ascii));
+        if (s.length() < 6) {
+            int zeroCount = 6 - s.length();
+            for (int j = 0; j < zeroCount; j++) {
+                s.insert(0, '0');
+            }
+        }
+        return s.toString();
     }
 
 

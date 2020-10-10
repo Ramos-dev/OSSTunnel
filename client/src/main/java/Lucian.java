@@ -9,12 +9,7 @@ import java.net.InetAddress;
 import java.net.URL;
 import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-import java.util.Random;
-import java.util.Scanner;
-import java.util.TimeZone;
-import java.util.UUID;
+import java.util.*;
 
 
 public class Lucian {
@@ -22,7 +17,7 @@ public class Lucian {
 
     private static String type = "OSS";
 
-    private static String endpoint = "https://xxx.oss-cn-hangzhou.aliyuncs.com/";
+    private static String endpoint = "https://xxxx.oss-cn-hangzhou.aliyuncs.com/";
 
     private static String bucketname = "/";
 

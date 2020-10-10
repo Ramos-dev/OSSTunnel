@@ -1,6 +1,7 @@
 [toc]
 
 > 对象存储介绍:对象存储服务是云厂商提供的一种海量、安全、低成本、高可靠的云存储服务，适合存放任意类型的文件。容量和处理能力弹性扩展，多种存储类型供选择，全面优化存储成本。方便业务在任何时间、任何地点、任何互联网设备上进行上传和下载数据。
+>
 
 
 
@@ -25,7 +26,7 @@
 
 ### 使用介绍：
 
-1. 安全测试工程师在靶机上编译和运行加载器SennaLoader，当然也可以直接执行java命令运行已编译好的class或者jar文件。
+1. 安全测试工程师在靶机上编译和运行加载器SennaLoader，当然也可以直接执行java命令运行已编译好的class\jar文件,或者反序列化直接打入这个class。
 
    ![执行运行加载器](https://tva1.sinaimg.cn/large/007S8ZIlly1gjh7f3kmjnj30vw09ogow.jpg)
 
@@ -49,4 +50,31 @@
 
    ![-k指定需要删除的主机id](https://tva1.sinaimg.cn/large/007S8ZIlly1gjh48csapfj31bw0c8myk.jpg)
 
-   ![java和class文件均已删除](https://tva1.sinaimg.cn/large/007S8ZIlly1gjh6g9t1wqj30um0aggpn.jpg)
+   ![java和class文件均已删除](https://tva1.sinaimg.cn/large/007S8ZIlly1gjh6g9t1wqj30um0aggpn.jpg) 
+
+   
+
+### Q&A
+
+问：这个工具和蚁剑、冰蝎，哥斯拉有什么区别？
+
+答：这不是一个webshell管理工具，是用java写的rat，提供了一种新的中转通道思路，本质还是基于http的。 
+
+问：需要目标系统什么环境，一定要安装jdk吗？
+
+答：不需要jdk（java开发套件），需要java（java运行环境），只要能执行java命令即可，javac的功能是为了无需考虑目标机器的java版本，一次执行成功。你也可以编译为jar包、打包为exe直接运行。
+
+问：对象存储ak、sk需要什么权限？
+
+答：需要对bucket下的对象的读写权限，为了避免泄露内置的ak、sk，自己搭建bucket的可以设置为公共读写。最好填入你在渗透测试过程中发现的业务自身的ak、sk访问业务bucket，流量更隐蔽。
+
+问：github地址？
+
+答：https://github.com/Ramos-dev/OSSTunnel 
+
+问：嗯，还有呢？
+
+答：工具主要面向于合法授权的渗透测试安全人员以及进行常规操作的网站管理员。任何人不得将其用于非法用途以及盈利等目的，否则后果自行承担并将追究其相关责任！
+
+ 
+
